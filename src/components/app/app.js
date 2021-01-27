@@ -8,6 +8,12 @@ import "./app.css";
 
 const App = () => {
   const [toggler, setToggle] = useState(true);
+  const [selectedChar, setSelectedChar] = useState(null);
+
+  const onCharSelected = (id) => {
+    setSelectedChar(id);
+  };
+
   return (
     <>
       <Container>
@@ -24,10 +30,10 @@ const App = () => {
         </Row>
         <Row>
           <Col md="6">
-            <ItemList />
+            <ItemList onCharSelected={onCharSelected} />
           </Col>
           <Col md="6">
-            <CharDetails />
+            <CharDetails charId={selectedChar} />
           </Col>
         </Row>
       </Container>

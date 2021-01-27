@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./randomChar.css";
 import GotService from "../../services/gotService";
 import Spiner from "../spiner";
@@ -30,17 +30,24 @@ const RandomChar = () => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    const updateChar = () => {
+      let id = Math.floor(Math.random() * (140 - 25 + 1)) + 25;
+      gotService
+        .getCharacter(id)
+        .then((char) => {
+          console.log(char);
+          updateInform(char);
+          setLoading(false);
+        })
+        .catch(onError);
+    };
+    const idInterval = setInterval(updateChar, 4000);
+
+    return () => clearInterval(idInterval);
+  }, []);
+
   //Math.floor(Math.random() * (140 - 25 + 1)) + 25;
-  const updateChar = () => {
-    let id = 33;
-    gotService
-      .getCharacter(id)
-      .then((char) => {
-        updateInform(char);
-        setLoading(false);
-      })
-      .catch(onError);
-  };
 
   const errorMessage = error ? <ErrorMessage /> : null;
   const spiner = loading ? <Spiner /> : null;
@@ -56,7 +63,6 @@ const RandomChar = () => {
 
   return (
     <div className="random-block rounded">
-      {updateChar()}
       {errorMessage}
       {spiner}
       {content}

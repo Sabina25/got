@@ -1,20 +1,44 @@
-import React, {Component} from 'react';
-import './itemList.css';
-export default class ItemList extends Component {
+import React, { useEffect, useState } from "react";
+import "./itemList.css";
+import GotService from "../../services/gotService";
+import Spiner from "../spiner";
 
-    render() {
+const ItemList = ({ onCharSelected }) => {
+  const [charList, setCharList] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const gotService = new GotService();
+
+  useEffect(() => {
+    gotService.getAllCharacters().then((charlist) => {
+      console.log(charlist);
+      setCharList(charlist);
+      setLoading(!loading);
+    });
+  }, []);
+
+  console.log(charList);
+
+  if (!charList) {
+    return <Spiner />;
+  }
+
+  return (
+    <ul className="item-list list-group">
+      {charList.map((char, i) => {
         return (
-            <ul className="item-list list-group">
-                <li className="list-group-item">
-                    John Snow
-                </li>
-                <li className="list-group-item">
-                    Brandon Stark
-                </li>
-                <li className="list-group-item">
-                    Geremy
-                </li>
-            </ul>
+          <li
+            li
+            key={i}
+            className="list-group-item"
+            onClick={onCharSelected(i)}
+          >
+            {char.name}
+          </li>
         );
-    }
-}
+      })}
+    </ul>
+  );
+};
+
+export default ItemList;
