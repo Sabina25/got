@@ -1,0 +1,13 @@
+button {
+    width: 250px;
+    height: 60px;
+    background-color: rgb(29, 114, 189);
+    color: rgb(230, 230, 230);
+    text-align: center;
+    border: none;
+    margin-bottom: 20px;
+}
+
+.col-lg-5 {
+    padding: 10px;
+}
