@@ -1,43 +1,29 @@
 import React, { useState } from "react";
 import { Col, Row, Container } from "reactstrap";
 import Header from "../header";
-import RandomChar from "../randomChar";
-import ItemList from "../itemList";
-import CharDetails from "../charDetails";
+
+import Houses from "../Houses";
+import Books from "../Books";
+import CharacterPage from "../CharacterPage";
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import "./app.css";
 
 const App = () => {
-  const [toggler, setToggle] = useState(true);
-  const [selectedChar, setSelectedChar] = useState(null);
-
-  const onCharSelected = (id) => {
-    setSelectedChar(id);
-  };
-
   return (
-    <>
-      <Container>
-        <Header />
-      </Container>
-      <Container>
-        <Row>
-          <Col lg={{ size: 5, offset: 0 }}>
-            {toggler ? <RandomChar /> : null}
-            <button onClick={() => setToggle(!toggler)}>
-              Toggle random charter
-            </button>
-          </Col>
-        </Row>
-        <Row>
-          <Col md="6">
-            <ItemList onCharSelected={onCharSelected} />
-          </Col>
-          <Col md="6">
-            <CharDetails charId={selectedChar} />
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Router>
+      <>
+        <Container>
+          <Header />
+        </Container>
+        <Container>
+          <Route path="/characters" exact component={CharacterPage} />
+          <Route path="/books" exact component={Books} />
+          <Route path="/houses" exact component={Houses} />
+        </Container>
+      </>
+    </Router>
   );
 };
 

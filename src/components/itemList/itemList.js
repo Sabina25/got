@@ -11,13 +11,10 @@ const ItemList = ({ onCharSelected }) => {
 
   useEffect(() => {
     gotService.getAllCharacters().then((charlist) => {
-      console.log(charlist);
       setCharList(charlist);
       setLoading(!loading);
     });
   }, []);
-
-  console.log(charList);
 
   if (!charList) {
     return <Spiner />;
@@ -31,7 +28,7 @@ const ItemList = ({ onCharSelected }) => {
             li
             key={i}
             className="list-group-item"
-            onClick={onCharSelected(i)}
+            onClick={() => onCharSelected(i)}
           >
             {char.name}
           </li>
